@@ -1,44 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="databaze_maui.MainPage">
-                  
-    
-    
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="databaze_maui.MainPage"
+             Title="Seznam Osob">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+    <VerticalStackLayout Padding="20">
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
+        <!-- Formulář pro zadání nové osoby -->
+        <Entry x:Name="FirstNameEntry" Placeholder="Jméno" />
+        <Entry x:Name="LastNameEntry" Placeholder="Příjmení" />
+        <DatePicker x:Name="BirthDatePicker" />
+        <Entry x:Name="SocialSecurityNumberEntry" Placeholder="Rodné číslo" />
 
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+        <!-- Tlačítko pro přidání nové osoby -->
+        <Button Text="Přidat osobu" Clicked="OnAddPersonClicked"/>
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+        <!-- Seznam pro zobrazení osob -->
+        <CollectionView x:Name="PeopleListView" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+                        <!-- Zobrazení jména a příjmení -->
+                        <Label Grid.Row="0" Text="{Binding FirstName}" />
+                        <Label Grid.Row="0" Text="{Binding LastName}" HorizontalOptions="End" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+                        <!-- Zobrazení data narození -->
+                        <Label Grid.Row="1" Text="{Binding BirthDate, StringFormat='{0:d}'}" />
 
+                        <!-- Zobrazení rodného čísla -->
+                        <Label Grid.Row="1" Text="{Binding SocialSecurityNumber}" HorizontalOptions="End" />
+
+                        <!-- Tlačítko pro smazání osoby -->
+                        <Button Text="Smazat" Clicked="OnDeletePersonClicked" CommandParameter="{Binding Id}" HorizontalOptions="End" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
 </ContentPage>
+
